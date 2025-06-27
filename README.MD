@@ -10,7 +10,9 @@ api untuk mendapatkan Nomor Statistik Madrasah (NSM) seluruh Indonesia
   nsm: string,
   name: string,
   city: string,
-  district: string
+  district: string,
+  address: string,
+  school_type: enum,
 }
 ```
 
@@ -27,8 +29,7 @@ Returns a paginated list of NSM objects.
 
 #### Request Headers  
 ```http
-Content-Type: application/json  
-Accept: application/json  
+none
 ```
 #### Response 200
 ```
