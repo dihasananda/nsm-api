@@ -14,7 +14,6 @@ api untuk mendapatkan Nomor Statistik Madrasah (NSM) seluruh Indonesia
 }
 ```
 
-
 ### Get NSM List  
 `GET /nsms`  
 
@@ -30,18 +29,22 @@ Returns a paginated list of NSM objects.
 ```http
 Content-Type: application/json  
 Accept: application/json  
+```
+#### Response 200
+```
 {
   "success": true,
   "data": [
-    { "id": 1, "name": "NSM 1", ... },
-    { "id": 2, "name": "NSM 2", ... }
+    { "nsm": 1xx, "name": "MIFTAHUL ANAM", ... },
+    { "nsm": 2xx, "name": "TADIKA MESRA", ... }
   ],
   "pagination": {
-    "total": 50,
     "page": 1,
     "limit": 10,
-    "total_pages": 5
   }
 }
 ```
-
+#### Example Usage
+```bash
+curl -X GET "https://api.example.com/nsms?page=2&limit=5"
+```
