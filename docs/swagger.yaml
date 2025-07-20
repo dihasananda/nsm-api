@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Wilayah & Sekolah API
+  version: 1.0.1
+
+paths:
+  /provinces:
+    get:
+      summary: Get all provinces
+      responses:
+        '200':
+          description: List of provinces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Province'
+
+  /cities:
+    get:
+      summary: Get cities by province
+      parameters:
+        - in: query
+          name: province_id
+          schema:
+            type: integer
+          required: false
+          description: Filter cities by province ID
+      responses:
+        '200':
+          description: List of cities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/City'
+
+  /sub_districts:
+    get:
+      summary: Get sub-districts by city
+      parameters:
+        - in: query
+          name: city_id
+          schema:
+            type: integer
+          required: false
+          description: Filter sub-districts by city ID
+      responses:
+        '200':
+          description: List of sub-districts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubDistrict'
+
+  /schools:
+    get:
+      summary: Get schools with optional filters
+      parameters:
+        - in: query
+          name: nsm
+          schema:
+            type: string
+          required: false
+          description: Filter school by exact NSM
+
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+          description: Search school by partial name (case-insensitive)
+
+        - in: query
+          name: province_id
+          schema:
+            type: integer
+          required: false
+          description: Filter schools by province ID
+
+        - in: query
+          name: city_id
+          schema:
+            type: integer
+          required: false
+          description: Filter schools by city ID
+
+        - in: query
+          name: sub_district_id
+          schema:
+            type: integer
+          required: false
+          description: Filter schools by sub-district ID
+
+      responses:
+        '200':
+          description: List of filtered schools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+
+components:
+  schemas:
+    Province:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 35
+        name:
+          type: string
+          example: Jawa Timur
+
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3516
+        name:
+          type: string
+          example: Mojokerto
+        province_id:
+          type: integer
+          example: 35
+
+    SubDistrict:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3516130
+        name:
+          type: string
+          example: Sooko
+        city_id:
+          type: integer
+          example: 3516
+
+    School:
+      type: object
+      properties:
+        nsm:
+          type: string
+          example: "131235160027"
+        name:
+          type: string
+          example: "MAS PESANTREN AL-AMIN"
+        sub_district_id:
+          type: integer
+          example: 3516130
+        address:
+          type: string
+          example: "Jl. RA. BASUNI NO. 18 JAMPIROGO SOOKO MOJOKERTO JAWA TIMUR"
+        school_type:
+          type: string
+          enum: [RA, MIN, MIS, MTSN, MTSS, MAN, MAS, MAKN, MAKS]
+          example: MTSN
