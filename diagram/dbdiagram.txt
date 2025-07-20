@@ -7,7 +7,6 @@ Table cities {
   id int [pk, increment]
   name varchar [not null]
   province_id int [not null, ref: > provinces.id]
-  type varchar [not null] // Kota atau Kabupaten
 }
 
 Table sub_districts {
