@@ -23,5 +23,12 @@ func SetupRouter() *gin.Engine {
 		})
 	})
 
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error":   "Not Found",
+			"message": "The requested resource does not exist",
+		})
+	})
+
 	return r
 }
