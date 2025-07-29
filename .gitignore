@@ -7,24 +7,15 @@
 *.test
 *.out
 
+# Databases
+*.db
+*.sqlite
+
 # Go build output
 /bin/
 /build/
 /dist/
 *.log
-
-# Go test binary
-*.test
-
-# Coverage reports
-*.cover
-*.coverprofile
-*.cov
-coverage.html
-coverage.out
-
-# Dependency directories (go modules keeps go.sum)
-vendor/
 
 # IDE / Editor files
 .idea/

@@ -1,6 +1,8 @@
 package router
 
 import (
+	"nsm-api/internal/handlers"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,20 +11,11 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Health check route
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "healthy",
-		})
-	})
+	// Health routes
+	r.GET("/health", handlers.HealthCheck)
+	r.GET("/ping", handlers.Ping)
 
-	// Ping-Pong route
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-
+	// NoRoute handler
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error":   "Not Found",
