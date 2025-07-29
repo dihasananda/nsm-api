@@ -1,4 +1,4 @@
-package entity
+package entities
 
 //struct for nsm
 type NSM struct {

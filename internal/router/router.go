@@ -1,7 +1,9 @@
 package router
 
 import (
+	"nsm-api/configs"
 	"nsm-api/internal/handlers"
+	"nsm-api/internal/repository"
 
 	"net/http"
 
@@ -11,9 +13,17 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Health routes
+	// DB connection from configs
+	db := configs.InitDB()
+
+	// Repository & Handler
+	NSMRepo := repository.NewNSMRepository(db)
+	NSMHandler := handlers.NewNsmHandler(NSMRepo)
+
+	// Routes
 	r.GET("/health", handlers.HealthCheck)
 	r.GET("/ping", handlers.Ping)
+	r.GET("/nsms", NSMHandler.GetNSMs)
 
 	// NoRoute handler
 	r.NoRoute(func(c *gin.Context) {

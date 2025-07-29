@@ -8,8 +8,8 @@
 *.out
 
 # Databases
-*.db
-*.sqlite
+# *.db
+# *.sqlite
 
 # Go build output
 /bin/
