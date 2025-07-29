@@ -1,13 +1,13 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+	"nsm-api/internal/router"
+)
 
 func main() {
-	router := gin.Default()
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "healty",
-		})
-	})
-	router.Run(":8080") // listen and serve on 0.0.0.0:8080
+	r := router.SetupRouter()
+	if err := r.Run(":8080"); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }
