@@ -21,3 +21,11 @@ func (r *SchoolRepository) GetAll() ([]entities.School, error) {
 	}
 	return schools, nil
 }
+
+func (r *SchoolRepository) GetByNSM(nsm string) (*entities.School, error) {
+	var school entities.School
+	if err := r.db.Where("nsm = ?", nsm).First(&school).Error; err != nil {
+		return nil, err
+	}
+	return &school, nil
+}

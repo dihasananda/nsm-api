@@ -23,3 +23,25 @@ func (h *SchoolHandler) GetSchools(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, schools)
 }
+
+func (h *SchoolHandler) GetSchoolByNSM(c *gin.Context) {
+	nsm := c.Query("nsm")
+	if nsm == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Bad Request",
+			"message": "Missing required query parameter 'nsm'",
+		})
+		return
+	}
+
+	school, err := h.service.GetSchoolByNSM(nsm)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error":   "Not Found",
+			"message": "School with given NSM not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, school)
+}

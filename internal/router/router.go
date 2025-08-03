@@ -17,7 +17,13 @@ func SetupRouter(schoolHandler *handlers.SchoolHandler) *gin.Engine {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})
-	r.GET("/schools", schoolHandler.GetSchools)
+	r.GET("/schools", func(c *gin.Context) {
+		if c.Query("nsm") != "" {
+			schoolHandler.GetSchoolByNSM(c)
+		} else {
+			schoolHandler.GetSchools(c)
+		}
+	})
 
 	// NoRoute handler
 	r.NoRoute(func(c *gin.Context) {

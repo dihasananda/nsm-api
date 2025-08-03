@@ -16,3 +16,7 @@ func NewSchoolService(repo *repository.SchoolRepository) *SchoolService {
 func (s *SchoolService) GetAllSchools() ([]entities.School, error) {
 	return s.repo.GetAll()
 }
+
+func (s *SchoolService) GetSchoolByNSM(nsm string) (*entities.School, error) {
+	return s.repo.GetByNSM(nsm)
+}
