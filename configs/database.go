@@ -11,7 +11,7 @@ import (
 func InitDB() *gorm.DB {
 	db, err := gorm.Open(sqlite.Dialector{
 		DriverName: "sqlite", // uses modernc.org/sqlite under the hood
-		DSN:        "./db/nsms.db",
+		DSN:        "./db/schools.db",
 	}, &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect database: %v", err)

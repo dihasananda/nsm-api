@@ -1,7 +1,6 @@
 package entities
 
-//struct for nsm
-type NSM struct {
+type School struct {
 	NSM           string `json:"nsm"`
 	Name          string `json:"name"`
 	SubDistrictID string `json:"sub_district_id"`

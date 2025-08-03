@@ -17,13 +17,13 @@ func SetupRouter() *gin.Engine {
 	db := configs.InitDB()
 
 	// Repository & Handler
-	NSMRepo := repository.NewNSMRepository(db)
-	NSMHandler := handlers.NewNsmHandler(NSMRepo)
+	SchoolRepo := repository.NewSchoolRepository(db)
+	SchoolHandler := handlers.NewSchoolHandler(SchoolRepo)
 
 	// Routes
 	r.GET("/health", handlers.HealthCheck)
 	r.GET("/ping", handlers.Ping)
-	r.GET("/nsms", NSMHandler.GetNSMs)
+	r.GET("/schools", SchoolHandler.GetSchools)
 
 	// NoRoute handler
 	r.NoRoute(func(c *gin.Context) {
