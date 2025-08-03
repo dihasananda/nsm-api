@@ -2,21 +2,21 @@ package handlers
 
 import (
 	"net/http"
-	"nsm-api/internal/repository"
+	"nsm-api/internal/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 type SchoolHandler struct {
-	Repo *repository.SchoolRepository
+	service *services.SchoolService
 }
 
-func NewSchoolHandler(repo *repository.SchoolRepository) *SchoolHandler {
-	return &SchoolHandler{Repo: repo}
+func NewSchoolHandler(service *services.SchoolService) *SchoolHandler {
+	return &SchoolHandler{service: service}
 }
 
 func (h *SchoolHandler) GetSchools(c *gin.Context) {
-	schools, err := h.Repo.GetAll()
+	schools, err := h.service.GetAllSchools()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

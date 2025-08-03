@@ -1,29 +1,23 @@
 package router
 
 import (
-	"nsm-api/configs"
-	"nsm-api/internal/handlers"
-	"nsm-api/internal/repository"
-
 	"net/http"
+	"nsm-api/internal/handlers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(schoolHandler *handlers.SchoolHandler) *gin.Engine {
 	r := gin.Default()
 
-	// DB connection from configs
-	db := configs.InitDB()
-
-	// Repository & Handler
-	SchoolRepo := repository.NewSchoolRepository(db)
-	SchoolHandler := handlers.NewSchoolHandler(SchoolRepo)
-
 	// Routes
-	r.GET("/health", handlers.HealthCheck)
-	r.GET("/ping", handlers.Ping)
-	r.GET("/schools", SchoolHandler.GetSchools)
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
+	})
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "pong"})
+	})
+	r.GET("/schools", schoolHandler.GetSchools)
 
 	// NoRoute handler
 	r.NoRoute(func(c *gin.Context) {

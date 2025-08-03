@@ -7,15 +7,17 @@ import (
 )
 
 type SchoolRepository struct {
-	DB *gorm.DB
+	db *gorm.DB
 }
 
 func NewSchoolRepository(db *gorm.DB) *SchoolRepository {
-	return &SchoolRepository{DB: db}
+	return &SchoolRepository{db: db}
 }
 
 func (r *SchoolRepository) GetAll() ([]entities.School, error) {
-	var school []entities.School
-	result := r.DB.Find(&school)
-	return school, result.Error
+	var schools []entities.School
+	if err := r.db.Find(&schools).Error; err != nil {
+		return nil, err
+	}
+	return schools, nil
 }
