@@ -34,6 +34,25 @@ func (h *SchoolHandler) GetSchoolByNSM(c *gin.Context) {
 		return
 	}
 
+	// Validate NSM: must be exactly 10 digits
+	if len(nsm) != 10 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Bad Request",
+			"message": "NSM must be exactly 10 digits",
+		})
+		return
+	}
+	for _, ch := range nsm {
+		if ch < '0' || ch > '9' {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   "Bad Request",
+				"message": "NSM must contain only digits",
+			})
+			return
+		}
+	}
+
+	// Query service
 	school, err := h.service.GetSchoolByNSM(nsm)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
