@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  nsm-api:
+    container_name: nsm-api-dev
+    image: localhost/nsm-api:dev
+    ports:
+      - "5000:8080"
+    restart: "always"
